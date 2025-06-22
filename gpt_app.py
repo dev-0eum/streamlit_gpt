@@ -75,7 +75,7 @@ st.title("📡 Django 서버에서 데이터 가져오기")
 # 사용자가 버튼을 누르면 GET 요청
 if st.button("서버에 요청 보내기"):
     try:
-        response = requests.get("https://8000-animated-bassoon-wqwq77p77xw25qx4.app.github.dev/main/api/text/")  # 로컬에서 Django 서버가 실행 중이어야 함
+        response = requests.get("https://animated-bassoon-wqwq77p77xw25qx4-8000.app.github.dev/main/api/text/")  # 로컬에서 Django 서버가 실행 중이어야 함
         response.raise_for_status()
         data = response.json()
         st.success(f"✅ 서버 응답: {data}")
