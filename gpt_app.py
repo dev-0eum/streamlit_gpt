@@ -74,7 +74,7 @@ import requests
 import pandas as pd
 
 # 1. Django API 호출
-API_URL = "http://localhost:8000/api/show-users/"  # ← 주소 확인!
+API_URL = "https://verbose-tribble-jpxp55v5549h5j76-8000.app.github.dev/accounts/api/"  # ← 주소 확인!
 try:
     response = requests.get(API_URL)
     response.raise_for_status()
