@@ -75,7 +75,7 @@ st.title(" Send Message to Django API")
 user_input = st.text_input("Enter a message:", placeholder="e.g., hello world")
 
 # Django API 주소 설정 (배포 또는 로컬 서버 주소로 바꿔야 함)
-api_url = "http://localhost:8000/main/api/text/"  # 로컬에서 Django 서버가 실행 중이어야 함
+api_url = "https://animated-bassoon-wqwq77p77xw25qx4-8000.app.github.dev/main/api/text/"  # 로컬에서 Django 서버가 실행 중이어야 함
 
 if st.button("Send to API"):
     if user_input:
