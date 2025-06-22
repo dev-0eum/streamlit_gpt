@@ -11,7 +11,7 @@ from io import BytesIO
 # openai_api_key = os.environ.get("OPENAI_API_KEY")
 
 # OpenAI API 키 설정
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+# openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 st.set_page_config(page_title="대학생 GPT 학습 도우미", layout="wide")
 st.title("🎓 대학생 GPT 학습 도우미")
@@ -70,23 +70,26 @@ if st.session_state.messages:
 
 # streamlit_app.py
 
-import requests
-import pandas as pd
+# import requests
+# import pandas as pd
 
-# 1. Django API 호출
-API_URL = "https://verbose-tribble-jpxp55v5549h5j76-8000.app.github.dev/accounts/api/"  # ← 주소 확인!
-try:
-    response = requests.get(API_URL)
-    response.raise_for_status()
-    users = response.json()
-except requests.exceptions.RequestException as e:
-    st.error(f"API 요청 실패: {e}")
-    users = []
+# # 1. Django API 호출
+# API_URL = "https://verbose-tribble-jpxp55v5549h5j76-8000.app.github.dev/accounts/api/"  # ← 주소 확인!
+# try:
+#     response = requests.get(API_URL)
+#     print("connected")
+#     # response.raise_for_status()
+#     users = response
+#     print("name:   ", users.json()) 
+# except requests.exceptions.RequestException as e:
+#     st.error(f"API 요청 실패: {e}")
+#     users = []
+
 
 # 2. JSON 데이터를 판다스 DataFrame으로 변환
-if users:
-    df = pd.DataFrame(users)
-    st.title("사용자 목록")
-    st.dataframe(df)
-else:
-    st.warning("사용자 데이터를 불러올 수 없습니다.")
+# if users:
+#     df = pd.DataFrame(users)
+#     st.title("사용자 목록")
+#     st.dataframe(df)
+# else:
+#     st.warning("사용자 데이터를 불러올 수 없습니다.")
