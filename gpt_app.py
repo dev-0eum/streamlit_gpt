@@ -83,3 +83,20 @@ if st.button("서버에 요청 보내기"):
         st.error(f"❌ 요청 에러: {e}")
     except ValueError:
         st.error("❌ JSON 파싱 에러: 서버가 JSON 형식이 아닌 응답을 보냈어요.")
+
+
+st.title("Streamlit → Django POST 요청 보내기")
+
+user_input = st.text_input("보낼 메시지 입력:", "hello")
+
+if st.button("메시지 전송"):
+    url = "https://animated-bassoon-wqwq77p77xw25qx4-8000.app.github.dev/main/api/text"  # Django POST 받을 URL로 변경하세요
+    try:
+        response = requests.post(url, json={"message": user_input})
+        response.raise_for_status()
+        data = response.json()
+        st.success(f"서버 응답: {data}")
+    except requests.exceptions.RequestException as e:
+        st.error(f"요청 에러: {e}")
+    except ValueError:
+        st.error("JSON 파싱 에러 발생")
