@@ -68,56 +68,25 @@ if st.session_state.messages:
 
 
 
+# streamlit_app.py
+
 import requests
+import pandas as pd
 
-st.title("📡 Django 서버에서 데이터 가져오기")
+# 1. Django API 호출
+API_URL = "http://localhost:8000/api/show-users/"  # ← 주소 확인!
+try:
+    response = requests.get(API_URL)
+    response.raise_for_status()
+    users = response.json()
+except requests.exceptions.RequestException as e:
+    st.error(f"API 요청 실패: {e}")
+    users = []
 
-# 사용자가 버튼을 누르면 GET 요청
-if st.button("서버에 요청 보내기"):
-    try:
-        response = requests.get("https://animated-bassoon-wqwq77p77xw25qx4-8000.app.github.dev/main/api/text/")  # 로컬에서 Django 서버가 실행 중이어야 함
-        response.raise_for_status()
-        data = response.json()
-        st.success(f"✅ 서버 응답: {data}")
-    except requests.exceptions.RequestException as e:
-        st.error(f"❌ 요청 에러: {e}")
-    except ValueError:
-        st.error("❌ JSON 파싱 에러: 서버가 JSON 형식이 아닌 응답을 보냈어요.")
-
-
-st.title("Streamlit → Django POST 요청 보내기")
-
-user_input = st.text_input("보낼 메시지 입력:", "hello")
-
-if st.button("메시지 전송"):
-    url = "https://animated-bassoon-wqwq77p77xw25qx4-8000.app.github.dev/main/api/text"  # Django POST 받을 URL로 변경하세요
-    try:
-        response = requests.post(url, json={"message": user_input})
-        response.raise_for_status()
-        data = response.json()
-        st.success(f"서버 응답: {data}")
-    except requests.exceptions.RequestException as e:
-        st.error(f"요청 에러: {e}")
-    except ValueError:
-        st.error("JSON 파싱 에러 발생")
-
-
-
-st.title("Streamlit → Django GET 요청 보내기")
-
-# 입력 박스 (예: 보낼 메시지)
-user_input = st.text_input("서버에 보낼 메시지 입력:", "hello")
-
-if st.button("GET 요청 보내기"):
-    # Django 서버의 GET 처리 URL (본인의 주소로 변경하세요)
-    url = f"https://animated-bassoon-wqwq77p77xw25qx4-8000.app.github.dev/main/api/text/?message={user_input}"
-
-    try:
-        response = requests.get(url)
-        response.raise_for_status()  # 에러 발생 시 예외 발생
-        data = response.json()
-        st.success(f"서버 응답: {data}")
-    except requests.exceptions.RequestException as e:
-        st.error(f"요청 에러: {e}")
-    except ValueError:
-        st.error("JSON 파싱 에러 발생")
+# 2. JSON 데이터를 판다스 DataFrame으로 변환
+if users:
+    df = pd.DataFrame(users)
+    st.title("사용자 목록")
+    st.dataframe(df)
+else:
+    st.warning("사용자 데이터를 불러올 수 없습니다.")
