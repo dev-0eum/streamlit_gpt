@@ -68,18 +68,27 @@ if st.session_state.messages:
 
 
 
-import json
-st.title("📝 Text to JSON Example")
+import requests
+st.title(" Send Message to Django API")
 
-# 1. Input Box
-user_input = st.text_input("Enter some text:", placeholder="e.g., hello world")
+# 입력값 받기
+user_input = st.text_input("Enter a message:", placeholder="e.g., hello world")
 
-# 2. Convert to JSON format
-if user_input:
-    json_data = {
-        "my_data": user_input
-    }
+# Django API 주소 설정 (배포 또는 로컬 서버 주소로 바꿔야 함)
+api_url = "http://localhost:8000/api/receive-text/"  # 로컬에서 Django 서버가 실행 중이어야 함
 
-    # 3. Display JSON
-    st.subheader("📦 Output JSON")
-    st.json(json_data)
+if st.button("Send to API"):
+    if user_input:
+        payload = {"message": user_input}
+
+        try:
+            # POST 요청 보내기
+            response = requests.post(api_url, json=payload)
+            response_data = response.json()
+
+            st.success("✅ Response from Django API:")
+            st.json(response_data)
+        except Exception as e:
+            st.error(f"❌ Error: {e}")
+    else:
+        st.warning("⚠️ Please enter a message before sending.")
