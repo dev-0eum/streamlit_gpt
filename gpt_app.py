@@ -69,26 +69,17 @@ if st.session_state.messages:
 
 
 import requests
-st.title(" Send Message to Django API")
 
-# 입력값 받기
-user_input = st.text_input("Enter a message:", placeholder="e.g., hello world")
+st.title("📡 Django 서버에서 데이터 가져오기")
 
-# Django API 주소 설정 (배포 또는 로컬 서버 주소로 바꿔야 함)
-api_url = "https://animated-bassoon-wqwq77p77xw25qx4-8000.app.github.dev/main/api/text/"  # 로컬에서 Django 서버가 실행 중이어야 함
-
-if st.button("Send to API"):
-    if user_input:
-        payload = {"message": user_input}
-
-        try:
-            # POST 요청 보내기
-            response = requests.post(api_url, json=payload)
-            response_data = response.json()
-
-            st.success("✅ Response from Django API:")
-            st.json(response_data)
-        except Exception as e:
-            st.error(f"❌ Error: {e}")
-    else:
-        st.warning("⚠️ Please enter a message before sending.")
+# 사용자가 버튼을 누르면 GET 요청
+if st.button("서버에 요청 보내기"):
+    try:
+        response = requests.get("https://animated-bassoon-wqwq77p77xw25qx4-8000.app.github.dev/main/api/text/")  # 로컬에서 Django 서버가 실행 중이어야 함
+        response.raise_for_status()
+        data = response.json()
+        st.success(f"✅ 서버 응답: {data}")
+    except requests.exceptions.RequestException as e:
+        st.error(f"❌ 요청 에러: {e}")
+    except ValueError:
+        st.error("❌ JSON 파싱 에러: 서버가 JSON 형식이 아닌 응답을 보냈어요.")
