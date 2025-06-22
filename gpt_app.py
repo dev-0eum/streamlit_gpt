@@ -4,13 +4,14 @@ import requests
 from PIL import Image
 from io import BytesIO
 
-import os
-from dotenv import load_dotenv
-load_dotenv()
+# import os
+# from dotenv import load_dotenv
+# load_dotenv()
 
-openai_api_key = os.environ.get("OPENAI_API_KEY")
+# openai_api_key = os.environ.get("OPENAI_API_KEY")
+
 # OpenAI API 키 설정
-openai.api_key = openai_api_key
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 st.set_page_config(page_title="대학생 GPT 학습 도우미", layout="wide")
 st.title("🎓 대학생 GPT 학습 도우미")
