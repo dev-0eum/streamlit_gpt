@@ -66,3 +66,20 @@ if st.session_state.messages:
         st.markdown(f"**A{i+1}:** {a}")
 
 
+
+
+import json
+st.title("📝 Text to JSON Example")
+
+# 1. Input Box
+user_input = st.text_input("Enter some text:", placeholder="e.g., hello world")
+
+# 2. Convert to JSON format
+if user_input:
+    json_data = {
+        "my_data": user_input
+    }
+
+    # 3. Display JSON
+    st.subheader("📦 Output JSON")
+    st.json(json_data)
