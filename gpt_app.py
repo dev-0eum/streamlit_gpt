@@ -100,3 +100,24 @@ if st.button("메시지 전송"):
         st.error(f"요청 에러: {e}")
     except ValueError:
         st.error("JSON 파싱 에러 발생")
+
+
+
+st.title("Streamlit → Django GET 요청 보내기")
+
+# 입력 박스 (예: 보낼 메시지)
+user_input = st.text_input("서버에 보낼 메시지 입력:", "hello")
+
+if st.button("GET 요청 보내기"):
+    # Django 서버의 GET 처리 URL (본인의 주소로 변경하세요)
+    url = f"https://animated-bassoon-wqwq77p77xw25qx4-8000.app.github.dev/main/api/text/?message={user_input}"
+
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # 에러 발생 시 예외 발생
+        data = response.json()
+        st.success(f"서버 응답: {data}")
+    except requests.exceptions.RequestException as e:
+        st.error(f"요청 에러: {e}")
+    except ValueError:
+        st.error("JSON 파싱 에러 발생")
